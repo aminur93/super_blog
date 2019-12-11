@@ -20,7 +20,7 @@
 			</div>
 		</form><!-- form -->
 		<div class="button">
-			<a href="#">Training with live project</a>
+			<a href="#">Developer Aminur Rashid</a>
 		</div><!-- button -->
 	</section><!-- content -->
 </div><!-- container -->

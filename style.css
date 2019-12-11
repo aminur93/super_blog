@@ -210,6 +210,30 @@ margin:200px 0;
   margin-bottom: 10px;
   text-align: justify;
 }
+
+.pagination{
+    display: block;
+    font-size: 20px;
+    margin-top: 10px;
+    padding: 10px;
+    text-align: center;
+}
+
+.pagination a{
+    background: #e6af4b none repeat scroll 0 0;
+    border: 1px solid #a7700c;
+    border-radius: 3px;
+    color: #333;
+    margin-left: 2px;
+    padding: 2px 20px;
+    text-decoration: none;
+}
+
+.pagination a:hover{
+    background: #be8723 none repeat scroll 0 0;
+    color: #fff;
+}
+
 .notfound {
   min-height: 400px;
   padding-top: 100px;
