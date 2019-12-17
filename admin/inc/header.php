@@ -111,7 +111,7 @@
     <div class="grid_12 header-repeat">
         <div id="branding">
             <div class="floatleft logo">
-                <img src="img/livelogo.png" alt="Logo" />
+                <img src="img/logo1.png" alt="Logo" />
             </div>
             <div class="floatleft middle">
                 <h1>Super Blog</h1>

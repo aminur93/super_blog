@@ -17,7 +17,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Super Blog</title>
+    <?php
+    if(isset($_GET['pageId']))
+    {
+        $pageTitle = $_GET['pageId'];
+        $query = "select * from tbl_page where id='$pageTitle'";
+        $page = $db->select($query);
+        if($page) {
+            while ($result = $page->fetch_assoc()) {
+    ?>
+    <title><?= $result['title']; ?>-<?= TITLE; ?></title>
+    <?php } } }elseif(isset($_GET['id'])){
+        $postId  = $_GET['id'];
+        $query = "select * from tbl_post where id='$postId'";
+        $post = $db->select($query);
+        if($post) {
+        while ($results = $post->fetch_assoc()) {
+        ?>
+        <title><?= $results['title']; ?>-<?= TITLE; ?></title>
+    <?php } } }else{ ?>
+        <title><?= $fDate->title(); ?>-<?= TITLE; ?></title>
+    <?php } ?>
+    
     <meta name="language" content="English">
     <meta name="description" content="It is a website about education">
     <meta name="keywords" content="blog,cms blog">
@@ -88,9 +109,31 @@
     </div>
 </div>
 <div class="navsection templete">
+    <?php
+        $path = $_SERVER['SCRIPT_FILENAME'];
+        $currentPage = basename($path,'.php');
+    ?>
     <ul>
-        <li><a id="active" href="index.php">Home</a></li>
-        <li><a href="about.php">About</a></li>
-        <li><a href="contact.php">Contact</a></li>
+        <li>
+            <a <?php if($currentPage == 'index'){ echo 'id="active"'; }?> href="index.php">Home</a>
+        </li>
+        <?php
+        $query = "select * from tbl_page";
+        $page = $db->select($query);
+        if($page)
+        {
+            while ($result = $page->fetch_assoc())
+            {
+        ?>
+        <li><a
+            <?php
+                if(isset($_GET['pageId']) && $_GET['pageId'] == $result['id'])
+                {
+                    echo 'id="active"';
+                }
+            ?>
+            href="page.php?pageId=<?= $result['id']; ?>"><?= $result['title']; ?></a></li>
+        <?php } }?>
+        <li><a <?php if($currentPage == 'contact'){ echo 'id="active"'; }?> href="contact.php">Contact</a></li>
     </ul>
 </div>

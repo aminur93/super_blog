@@ -29,4 +29,19 @@
             
             return $data;
         }
+        
+        public function title()
+        {
+            $path = $_SERVER['SCRIPT_FILENAME'];
+            $title = basename($path,'.php');
+            //$title = str_replace('-',' ',$title);
+            if($title == 'index')
+            {
+                $title = 'home';
+            }elseif ($title == 'contact')
+            {
+                $title = 'contact';
+            }
+            return $title = ucfirst($title);
+        }
     }
