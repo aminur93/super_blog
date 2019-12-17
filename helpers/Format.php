@@ -20,4 +20,13 @@
             $text = $text."...";
             return $text;
         }
+        
+        public function validationData($data)
+        {
+            $data = trim($data);
+            $data = stripcslashes($data);
+            $data = htmlspecialchars($data);
+            
+            return $data;
+        }
     }

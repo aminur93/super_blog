@@ -1,11 +1,55 @@
 ﻿<?php include "inc/header.php"; ?>
-<?php include "inc/sidebar.php";?>
+<?php include "inc/sidebar.php"; ?>
         <div class="grid_10">
 		
             <div class="box round first grid">
                 <h2>Add New Post</h2>
+                <?php
+                if($_SERVER["REQUEST_METHOD"] == "POST") {
+                    $title = $_POST['title'];
+                    $category = $_POST['cat'];
+                    $tag = $_POST['tags'];
+                    $author = $_POST['author'];
+                    $body = $_POST['body'];
+    
+                    $title = mysqli_real_escape_string($db->link, $title);
+                    $category = mysqli_real_escape_string($db->link, $category);
+                    $tag = mysqli_real_escape_string($db->link, $tag);
+                    $author = mysqli_real_escape_string($db->link, $author);
+                    $body = mysqli_real_escape_string($db->link, $body);
+    
+                    $permited = array('jpg', 'jpeg', 'png', 'gif');
+                    $file_name = $_FILES['image']['name'];
+                    $file_size = $_FILES['image']['size'];
+                    $file_temp = $_FILES['image']['tmp_name'];
+    
+                    $div = explode('.', $file_name);
+                    $file_ext = strtolower(end($div));
+                    $unique_image = substr(md5(time()), 0, 10) . '.' . $file_ext;
+                    $uploaded_image = "uploads/" . $unique_image;
+    
+                    if ($title == "" || $category == "" || $tag == "" || $author == "" || $body == "" || $file_name == "") {
+                        echo "<span class='error'>Field Must Not Be Empty</span>";
+                    } elseif ($file_size > 1048567) {
+                        echo "<span class='error'>Image Size should be less then 1MB!</span>";
+                    } elseif (in_array($file_ext, $permited) === false) {
+                        echo "<span class='error'>You can upload only:-"
+                            . implode(', ', $permited) . "</span>";
+                    } else {
+                        move_uploaded_file($file_temp, $uploaded_image);
+                        $query = "INSERT INTO tbl_post(cat,title,body,image,author,tags)
+                        VALUES('$category','$title','$body','$uploaded_image','$author','$tag')";
+                        $inserted_rows = $db->insert($query);
+                        if ($inserted_rows) {
+                            echo "<span class='success'>Post Inserted Successfully.</span>";
+                        } else {
+                            echo "<span class='error'>Post Not Inserted !</span>";
+                        }
+                    }
+                }
+                ?>
                 <div class="block">
-                 <form action="" method="" enctype="multipart/form-data">
+                 <form action="addpost.php" method="post" enctype="multipart/form-data">
                     <table class="form">
                        
                         <tr>
@@ -13,7 +57,7 @@
                                 <label>Title</label>
                             </td>
                             <td>
-                                <input type="text" placeholder="Enter Post Title..." class="medium" />
+                                <input type="text" name="title" placeholder="Enter Post Title..." class="medium" />
                             </td>
                         </tr>
                      
@@ -22,11 +66,15 @@
                                 <label>Category</label>
                             </td>
                             <td>
-                                <select id="select" name="select">
+                                <select id="select" name="cat">
                                     <option value="">Select Category</option>
-                                    <option value="1">Category One</option>
-                                    <option value="2">Category Two</option>
-                                    <option value="3">Cateogry Three</option>
+                                    <?php
+                                    $query = "select * from tbl_category";
+                                    $category = $db->select($query);
+                                    while ($result = $category->fetch_assoc()){
+                                    ?>
+                                    <option value="<?= $result['id']; ?>"><?= $result['name']; ?></option>
+                                        <?php } ?>
                                 </select>
                             </td>
                         </tr>
@@ -37,7 +85,7 @@
                                 <label>Date Picker</label>
                             </td>
                             <td>
-                                <input type="text" id="date-picker" />
+                                <input type="text" name="date" id="date-picker" />
                             </td>
                         </tr>
                         <tr>
@@ -45,15 +93,34 @@
                                 <label>Upload Image</label>
                             </td>
                             <td>
-                                <input type="file" />
+                                <input type="file" name="image" />
                             </td>
                         </tr>
+    
+                        <tr>
+                            <td>
+                                <label>Tags</label>
+                            </td>
+                            <td>
+                                <input type="text" name="tags" placeholder="Enter Tags" class="medium" />
+                            </td>
+                        </tr>
+    
+                        <tr>
+                            <td>
+                                <label>Author</label>
+                            </td>
+                            <td>
+                                <input type="text" name="author" placeholder="Enter Author" class="medium" />
+                            </td>
+                        </tr>
+                        
                         <tr>
                             <td style="vertical-align: top; padding-top: 9px;">
                                 <label>Content</label>
                             </td>
                             <td>
-                                <textarea class="tinymce"></textarea>
+                                <textarea class="tinymce" name="body"></textarea>
                             </td>
                         </tr>
 						<tr>

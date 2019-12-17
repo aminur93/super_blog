@@ -5,6 +5,18 @@
      * Date: 12/11/2019
      * Time: 6:42 PM
      */
+    ob_start();
+    include '../lib/Session.php';
+    Session::checkSession();
+    
+    include '../config/config.php';
+    
+    include '../lib/Database.php';
+    
+    include '../helpers/Format.php';
+    
+    $db = new Database();
+    $fDate = new Format();
     ?>
 
 <!DOCTYPE html>
@@ -107,11 +119,18 @@
             </div>
             <div class="floatright">
                 <div class="floatleft">
-                    <img src="img/img-profile.jpg" alt="Profile Pic" /></div>
+                    <img src="img/img-profile.jpg" alt="Profile Pic" />
+                </div>
+                <?php
+                    if(isset($_GET['action']) && $_GET['action'] == "logout")
+                    {
+                        Session::destory();
+                    }
+                ?>
                 <div class="floatleft marginleft10">
                     <ul class="inline-ul floatleft">
-                        <li>Hello Admin</li>
-                        <li><a href="#">Logout</a></li>
+                        <li>Hello <?php echo Session::get("username"); ?></li>
+                        <li><a href="?action=logout">Logout</a></li>
                     </ul>
                 </div>
             </div>

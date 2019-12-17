@@ -39,7 +39,7 @@
         ?>
         <div class="popular clear">
             <h3><a href="post.php?id=<?php echo $result['id']; ?>"><?php echo $result['title']; ?></a></h3>
-            <a href="post.php?id=<?php echo $result['id']; ?>"><img src="admin/uploads/<?= $result['image']; ?>" alt="post image"/></a>
+            <a href="post.php?id=<?php echo $result['id']; ?>"><img src="admin/<?= $result['image']; ?>" alt="post image"/></a>
             <?php echo $fDate->textShorten($result['body'],125); ?>
         </div>
         <?php } }else{ header("Location: 404.php");} ?>

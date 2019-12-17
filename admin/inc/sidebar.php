@@ -21,10 +21,19 @@
                     </ul>
                 </li>
                 
-                <li><a class="menuitem">Update Pages</a>
+                <li><a class="menuitem">Pages</a>
                     <ul class="submenu">
-                        <li><a>About Us</a></li>
-                        <li><a>Contact Us</a></li>
+                        <li><a href="addpage.php">Add New Page</a></li>
+                        <?php
+                        $query = "select * from tbl_page";
+                        $page = $db->select($query);
+                        if($page)
+                        {
+                            while ($result = $page->fetch_assoc())
+                            {
+                        ?>
+                        <li><a href="page.php?pageId=<?= $result['id']; ?>"><?= $result['title']; ?></a></li>
+                        <?php } } ?>
                     </ul>
                 </li>
                 <li><a class="menuitem">Category Option</a>

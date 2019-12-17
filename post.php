@@ -22,7 +22,7 @@
                 ?>
 				<h2><?php echo $result['title']; ?></h2>
                 <h4><?php echo $fDate->formatDate($result['date']); ?>, By <?php echo $result['author']; ?></h4>
-                <img src="admin/uploads/<?php echo $result['image']; ?>" alt="post image"/>
+                <img src="admin/<?php echo $result['image']; ?>" alt="post image"/>
 				<?php echo $result['body']; ?>
 				
 				<div class="relatedpost clear">
@@ -36,7 +36,7 @@
                         while ($related_result = $related_post->fetch_assoc())
                         {
                     ?>
-					<a href="post.php?id=<?php echo $related_result['id']; ?>"><img src="admin/uploads/<?php echo $related_result['image']; ?>" alt="post image"/></a>
+					<a href="post.php?id=<?php echo $related_result['id']; ?>"><img src="admin/<?php echo $related_result['image']; ?>" alt="post image"/></a>
                     <?php } }else{ echo "No Related Post Available!!"; }?>
 				</div>
                 <?php } }else{ header("Location: 404.php");} ?>

@@ -18,7 +18,13 @@
             <li><a href="privacy.php">Privacy</a></li>
         </ul>
     </div>
-    <p>&copy; Copyright Developer Aminur Rashid.</p>
+    <?php
+    $query = "select * from tbl_copyright where id='1'";
+    $copyRight = $db->select($query);
+    $result = $copyRight->fetch_assoc();
+    //var_dump($result);die;
+    ?>
+    <p><?= $result['copy_right']; ?></p>
 </div>
 <div class="fixedicon clear">
     <a href="http://www.facebook.com"><img src="images/fb.png" alt="Facebook"/></a>
