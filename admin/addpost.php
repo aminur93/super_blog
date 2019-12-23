@@ -11,12 +11,14 @@
                     $tag = $_POST['tags'];
                     $author = $_POST['author'];
                     $body = $_POST['body'];
+                    $userid = $_POST['userid'];
     
                     $title = mysqli_real_escape_string($db->link, $title);
                     $category = mysqli_real_escape_string($db->link, $category);
                     $tag = mysqli_real_escape_string($db->link, $tag);
                     $author = mysqli_real_escape_string($db->link, $author);
                     $body = mysqli_real_escape_string($db->link, $body);
+                    $userid = mysqli_real_escape_string($db->link, $userid);
     
                     $permited = array('jpg', 'jpeg', 'png', 'gif');
                     $file_name = $_FILES['image']['name'];
@@ -37,8 +39,8 @@
                             . implode(', ', $permited) . "</span>";
                     } else {
                         move_uploaded_file($file_temp, $uploaded_image);
-                        $query = "INSERT INTO tbl_post(cat,title,body,image,author,tags)
-                        VALUES('$category','$title','$body','$uploaded_image','$author','$tag')";
+                        $query = "INSERT INTO tbl_post(cat,title,body,image,author,tags,userid)
+                        VALUES('$category','$title','$body','$uploaded_image','$author','$tag','$userid')";
                         $inserted_rows = $db->insert($query);
                         if ($inserted_rows) {
                             echo "<span class='success'>Post Inserted Successfully.</span>";
@@ -111,7 +113,8 @@
                                 <label>Author</label>
                             </td>
                             <td>
-                                <input type="text" name="author" placeholder="Enter Author" class="medium" />
+                                <input type="text" name="author" value="<?= Session::get('username'); ?>" class="medium" />
+                                <input type="hidden" name="userid" value="<?= Session::get('userId'); ?>" class="medium" />
                             </td>
                         </tr>
                         

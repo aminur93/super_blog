@@ -62,9 +62,8 @@
     <!-- jQuery dialog end here-->
     <script src="js/jquery-ui/jquery.ui.accordion.min.js" type="text/javascript"></script>
     <!--Fancy Button-->
-    <script src="js/fancy-button/fancy-button.js" type="text/javascript"></script>
-    
-    <script type="text/javascript" src="js/table/table.js"></script>
+<!-- <script src="js/fancy-button/fancy-button.js" type="text/javascript"></script>-->
+<!--<script type="text/javascript" src="js/table/table.js"></script>-->
     <script src="js/setup.js" type="text/javascript"></script>
     <script type="text/javascript">
         
@@ -142,11 +141,33 @@
     </div>
     <div class="grid_12">
         <ul class="nav main">
-            <li class="ic-dashboard"><a href="index.php"><span>Dashboard</span></a> </li>
-            <li class="ic-form-style"><a href=""><span>User Profile</span></a></li>
+            <li class="ic-dashboard"><a href="index.php"><span>Dashboard</span></a></li>
+            <li class="ic-dashboard"><a href="theme.php"><span>Theme</span></a></li>
+            <li class="ic-form-style"><a href="user_profile.php"><span>User Profile</span></a></li>
             <li class="ic-typography"><a href="changepassword.php"><span>Change Password</span></a></li>
-            <li class="ic-grid-tables"><a href="inbox.php"><span>Inbox</span></a></li>
-            <li class="ic-charts"><a href="postlist.php"><span>Visit Website</span></a></li>
+            <li class="ic-grid-tables"><a href="inbox.php"><span>Inbox
+                    <?php
+                    $query = "select * from tbl_contact where status='0'";
+                    $contact = $db->select($query);
+                    if ($contact)
+                    {
+                        $count = mysqli_num_rows($contact);
+                        echo "(".$count.")";
+                    }else{
+                        echo "(0)";
+                    }
+                    ?>
+                    </span>
+                </a>
+            </li>
+            
+            <?php
+                if(Session::get('userRole') == 0)
+                {
+            ?>
+            <li class="ic-charts"><a href="adduser.php"><span>Add User</span></a></li>
+            <?php } ?>
+            <li class="ic-charts"><a href="userlist.php"><span>User List</span></a></li>
         </ul>
     </div>
     

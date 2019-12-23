@@ -34,18 +34,15 @@
                 
                 if($result != false)
                 {
-                    $value = mysqli_fetch_array($result);
-                    $row = mysqli_num_rows($result);
+                    //$value = mysqli_fetch_array($result);
+                    $value = $result->fetch_assoc();
                     
-                    if ($row > 0)
-                    {
-                        Session::set("login", true);
-                        Session::set("username", $value['username']);
-                        Session::set("userId", $value['id']);
-                        header("Location: index.php");
-                    }else{
-                        echo "<span style='color:red;font-size: 18px;'>No Result Found!!</span>";
-                    }
+                    Session::set("login", true);
+                    Session::set("username", $value['username']);
+                    Session::set("userId", $value['id']);
+                    Session::set("userRole", $value['role']);
+                    header("Location: index.php");
+                    
                 }else{
                     echo "<span style='color:red;font-size: 18px;'>UserName or Password Not Match!!</span>";
                 }
@@ -63,6 +60,9 @@
 				<input type="submit" value="Log in" />
 			</div>
 		</form><!-- form -->
+        <div class="button">
+            <a href="forgetpass.php">Forget Password !</a>
+        </div><!-- button -->
 		<div class="button">
 			<a href="#">Developer Aminur Rashid</a>
 		</div><!-- button -->

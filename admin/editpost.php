@@ -26,12 +26,14 @@
                 $tag = $_POST['tags'];
                 $author = $_POST['author'];
                 $body = $_POST['body'];
+                $userid = $_POST['userid'];
                 
                 $title = mysqli_real_escape_string($db->link, $title);
                 $category = mysqli_real_escape_string($db->link, $category);
                 $tag = mysqli_real_escape_string($db->link, $tag);
                 $author = mysqli_real_escape_string($db->link, $author);
                 $body = mysqli_real_escape_string($db->link, $body);
+                $userid = mysqli_real_escape_string($db->link, $userid);
                 
                 $permited = array('jpg', 'jpeg', 'png', 'gif');
                 $file_name = $_FILES['image']['name'];
@@ -62,7 +64,8 @@
                                   body='$body',
                                   image='$uploaded_image',
                                   author='$author',
-                                  tags='$tag'
+                                  tags='$tag',
+                                  userid='$userid'
                                   where id='$postId'
                                   ";
             
@@ -80,7 +83,8 @@
                                   title='$title',
                                   body='$body',
                                   author='$author',
-                                  tags='$tag'
+                                  tags='$tag',
+                                  userid='$userid'
                                   where id='$postId'
                                   ";
         
@@ -167,6 +171,7 @@
                         </td>
                         <td>
                             <input type="text" value="<?= $result['author']; ?>" name="author" placeholder="Enter Author" class="medium" />
+                            <input type="hidden" value="<?= Session::get('userId'); ?>" name="userid" class="medium" />
                         </td>
                     </tr>
                     

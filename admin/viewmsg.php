@@ -31,10 +31,8 @@
                     $contact = $db->select($query);
                     if($contact)
                     {
-                    $i = 0;
                     while($result = $contact->fetch_assoc())
                     {
-                    $i++;
                 ?>
                 <table class="form">
                     

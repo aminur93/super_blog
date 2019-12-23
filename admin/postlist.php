@@ -70,7 +70,14 @@
                     <td><?= $result['author'];?></td>
                     <td><?= $result['tags'];?></td>
                     <td><?= $fDate->formatDate($result['date']);?></td>
-                    <td><a href="editpost.php?postId=<?= $result['id'];?>">Edit</a> || <a onclick="return confirm('Are You Sure Want To Delete')" href="?deletePost=<?= $result['id'];?>">Delete</a></td>
+                    <td>
+                        <a href="viewpost.php?viewpostId=<?= $result['id'];?>">View</a>
+                        <?php if(Session::get('userId') == $result['userid'] || Session::get('userRole') == '0'){ ?>
+                            ||<a href="editpost.php?postId=<?= $result['id'];?>">Edit</a>
+    
+                            ||<a onclick="return confirm('Are You Sure Want To Delete')" href="?deletePost=<?= $result['id'];?>">Delete</a>
+                        <?php } ?>
+                    </td>
                 </tr>
             <?php } } ?>
             </tbody>
